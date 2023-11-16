@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future getData() async {
-    final value = context.read<AuthProvider>();
+    final value = context.read<AuthProviders>();
     value.getDataFromSharedPreferences();
   }
 
@@ -27,9 +27,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // change read to watch!!!!
-    final value = context.watch<AuthProvider>();
+    final value = context.watch<AuthProviders>();
     return Scaffold(
       backgroundColor: cBlackColor,
+      appBar: AppBar(
+        backgroundColor: cLightBlackColorrr,
+        title: const Text(
+          "Home Screen",
+          style: TextStyle(
+            color: cWhiteColor,
+            fontSize: 27,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,21 +57,30 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Text(
               "Welcome ${value.name}",
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: cWhiteColor),
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: cWhiteColor),
             ),
             const SizedBox(
               height: 10,
             ),
             Text(
               "${value.email}",
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500,color: cWhiteColor),
+              style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: cWhiteColor),
             ),
             const SizedBox(
               height: 10,
             ),
             Text(
               "${value.uid}",
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500,color: cWhiteColor),
+              style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: cWhiteColor),
             ),
             const SizedBox(
               height: 10,
@@ -68,7 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("PROVIDER:",style: TextStyle(color: cGreyColor),),
+                const Text(
+                  "PROVIDER:",
+                  style: TextStyle(color: cGreyColor),
+                ),
                 const SizedBox(
                   width: 5,
                 ),

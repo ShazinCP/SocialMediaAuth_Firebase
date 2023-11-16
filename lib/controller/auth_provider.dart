@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthProvider extends ChangeNotifier {
+class AuthProviders extends ChangeNotifier {
 
   // instance of firebaseauth, facebook and google=
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -45,7 +45,7 @@ class AuthProvider extends ChangeNotifier {
   String? _imageUrl;
   String? get imageUrl => _imageUrl;
 
-  AuthProvider() {
+  AuthProviders() {
     checkSignInUser();
   }
 
@@ -175,10 +175,10 @@ class AuthProvider extends ChangeNotifier {
     DocumentSnapshot snap =
         await FirebaseFirestore.instance.collection('users').doc(_uid).get();
     if (snap.exists) {
-      debugPrint("EXISTING USER");
+      print("EXISTING USER");
       return true;
     } else {
-      debugPrint("NEW USER");
+      print("NEW USER");
       return false;
     }
   }
@@ -187,7 +187,7 @@ class AuthProvider extends ChangeNotifier {
   Future userSignOut() async {
     await firebaseAuth.signOut;
     await googleSignIn.signOut();
-    await facebookAuth.logOut();
+    // await facebookAuth.logOut();
 
     _isSignedIn = false;
     notifyListeners();

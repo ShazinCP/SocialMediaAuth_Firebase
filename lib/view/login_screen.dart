@@ -18,9 +18,9 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: cBlackColor,
       appBar: AppBar(
-        backgroundColor: cBlackColor,
+        backgroundColor: cLightBlackColorrr,
         title: const Text(
-          "Login Screen",
+          "Auth App",
           style: TextStyle(
             color: cWhiteColor,
             fontSize: 27,
@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Consumer<AuthProvider>(
+      body: Consumer<AuthProviders>(
         builder: (context, data, child) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +129,7 @@ class LoginScreen extends StatelessWidget {
 
   // HANDLING GOOGLE SIGNIN IN
   Future handleGoogleSignIn(BuildContext context) async {
-    final data = context.read<AuthProvider>();
+    final data = context.read<AuthProviders>();
     final network = context.read<InternetProvider>();
     await network.checkInternetConnection();
 
