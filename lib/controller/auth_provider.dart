@@ -17,6 +17,8 @@ class AuthProvider extends ChangeNotifier {
       RoundedLoadingButtonController();
   final RoundedLoadingButtonController facebookController =
       RoundedLoadingButtonController();
+  final RoundedLoadingButtonController githubController =
+      RoundedLoadingButtonController();
 
   bool _isSignedIn = false;
   bool get isSignedIn => _isSignedIn;
@@ -112,53 +114,13 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // sign in with facebook
-  // Future signInWithFacebook() async {
-  //   final LoginResult result = await facebookAuth.login();
-  //   // getting the profile
-  //   final graphResponse = await http.get(Uri.parse(
-  //       'https://graph.facebook.com/v2.12/me?fields=name,picture.width(800).height(800),first_name,last_name,email&access_token=${result.accessToken!.token}'));
+  Future<UserCredential> signInWithGitHub() async {
+    // Create a new provider
+    GithubAuthProvider githubProvider = GithubAuthProvider();
 
-  //   final profile = jsonDecode(graphResponse.body);
-
-  //   if (result.status == LoginStatus.success) {
-  //     try {
-  //       final OAuthCredential credential =
-  //           FacebookAuthProvider.credential(result.accessToken!.token);
-  //       await firebaseAuth.signInWithCredential(credential);
-  //       // saving the values
-  //       _name = profile['name'];
-  //       _email = profile['email'];
-  //       _imageUrl = profile['picture']['data']['url'];
-  //       _uid = profile['id'];
-  //       _hasError = false;
-  //       _provider = "FACEBOOK";
-  //       notifyListeners();
-  //     } on FirebaseAuthException catch (e) {
-  //       switch (e.code) {
-  //         case "account-exists-with-different-credential":
-  //           _errorCode =
-  //               "You already have an account with us. Use correct provider";
-  //           _hasError = true;
-  //           notifyListeners();
-  //           break;
-
-  //         case "null":
-  //           _errorCode = "Some unexpected error while trying to sign in";
-  //           _hasError = true;
-  //           notifyListeners();
-  //           break;
-  //         default:
-  //           _errorCode = e.toString();
-  //           _hasError = true;
-  //           notifyListeners();
-  //       }
-  //     }
-  //   } else {
-  //     _hasError = true;
-  //     notifyListeners();
-  //   }
-  // }
+    return await FirebaseAuth.instance.signInWithProvider(githubProvider);
+  }
+  
 
   // ENTRY FOR CLOUDFIRESTORE
   Future getUserDataFromFirestore(uid) async {
@@ -234,7 +196,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future clearStoredData() async {
-    final SharedPreferences s = await SharedPreferences.getInstance();
-    s.clear();
+    final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    sharedPref.clear();
   }
 }

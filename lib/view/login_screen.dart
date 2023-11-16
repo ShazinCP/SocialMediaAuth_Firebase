@@ -40,23 +40,19 @@ class LoginScreen extends StatelessWidget {
                   handleGoogleSignIn(context);
                 },
                 controller: data.googleController,
-                successColor: Colors.red,
+                successColor: cBlackColor,
                 width: MediaQuery.of(context).size.width * 0.80,
                 elevation: 0,
                 borderRadius: 25,
-                color: Colors.red,
-                child: const Wrap(
+                color: cWhiteColor,
+                child: Wrap(
                   children: [
-                    Icon(
-                      FontAwesomeIcons.google,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                   cWidth15,
-                    Text(
+                    Image.asset("assets/google_icon.png", height: 25),
+                    cWidth15,
+                    const Text(
                       "Sign in with Google",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: cBlackColor,
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -67,26 +63,26 @@ class LoginScreen extends StatelessWidget {
               cHeight30,
               RoundedLoadingButton(
                 onPressed: () {
-                
+                 
                 },
                 controller: data.facebookController,
-                successColor: Colors.blue[900],
+                successColor: cDarkBlueColor,
                 width: MediaQuery.of(context).size.width * 0.80,
                 elevation: 0,
                 borderRadius: 25,
-                color: Colors.blue,
+                color: cDarkBlueColor,
                 child: const Wrap(
                   children: [
                     Icon(
                       FontAwesomeIcons.facebook,
                       size: 20,
-                      color: Colors.white,
+                      color: cWhiteColor,
                     ),
-                   cWidth15,
+                    cWidth15,
                     Text(
                       "Sign in with Facebook",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: cWhiteColor,
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -94,31 +90,44 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              cHeight100,
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account?",
-                    style: TextStyle(color: cWhiteColor),
-                  ),
-                  Text(
-                    "Signup",
-                    style: TextStyle(
-                      color: cBlueColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+               cHeight30,
+              RoundedLoadingButton(
+                onPressed: () {
+                  data.signInWithGitHub();
+                },
+                controller: data.githubController,
+                successColor: cLightBlackColor,
+                width: MediaQuery.of(context).size.width * 0.80,
+                elevation: 0,
+                borderRadius: 25,
+                color: cLightBlackColor,
+                child: const Wrap(
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.github,
+                      size: 20,
+                      color: cWhiteColor,
                     ),
-                  )
-                ],
-              )
+                    cWidth15,
+                    Text(
+                      "Sign in with GitHub",
+                      style: TextStyle(
+                        color: cWhiteColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           );
         },
       ),
     );
   }
-   // HANDLING GOOGLE SIGNIN IN
+
+  // HANDLING GOOGLE SIGNIN IN
   Future handleGoogleSignIn(BuildContext context) async {
     final data = context.read<AuthProvider>();
     final network = context.read<InternetProvider>();
@@ -128,7 +137,7 @@ class LoginScreen extends StatelessWidget {
       // ignore: use_build_context_synchronously
       openSnackBar(context, "Check your Internet connection", cRedColor);
       data.googleController.reset();
-    }else {
+    } else {
       await data.signInWithGoogle().then((value) {
         if (data.hasError == true) {
           openSnackBar(context, data.errorCode.toString(), cRedColor);
@@ -158,7 +167,8 @@ class LoginScreen extends StatelessWidget {
       });
     }
   }
-    // HANDLE AFTER SIGNIN
+
+  // HANDLE AFTER SIGNIN
   handleAfterSignIn(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 1000)).then((value) {
       nextScreenReplace(context, const HomeScreen());
