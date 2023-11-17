@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
       body: Consumer<AuthProviders>(
         builder: (context, data, child) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RoundedLoadingButton(
@@ -62,9 +62,7 @@ class LoginScreen extends StatelessWidget {
               ),
               cHeight30,
               RoundedLoadingButton(
-                onPressed: () {
-                 
-                },
+                onPressed: () {},
                 controller: data.facebookController,
                 successColor: cDarkBlueColor,
                 width: MediaQuery.of(context).size.width * 0.80,
@@ -90,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
               ),
-               cHeight30,
+              cHeight30,
               RoundedLoadingButton(
                 onPressed: () {
                   data.signInWithGitHub();

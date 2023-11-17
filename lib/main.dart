@@ -1,6 +1,6 @@
 import 'package:auth_app/controller/auth_provider.dart';
 import 'package:auth_app/controller/internet_provider.dart';
-import 'package:auth_app/view/login_screen.dart';
+import 'package:auth_app/view/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const LoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
