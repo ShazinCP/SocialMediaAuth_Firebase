@@ -1,4 +1,4 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class InternetProvider extends ChangeNotifier {
@@ -9,13 +9,20 @@ class InternetProvider extends ChangeNotifier {
     checkInternetConnection();
   }
 
-  Future checkInternetConnection() async {
-    var result = await Connectivity().checkConnectivity();
-    if (result == ConnectivityResult.none) {
+  String internet = "";
+
+  Future<void> checkInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        _hasInternet = true;
+        internet = "Turn off the data and repress again";
+        notifyListeners();
+      }
+    } on SocketException catch (_) {
       _hasInternet = false;
-    } else {
-      _hasInternet = true;
+      internet = "Turn On the data and repress again";
+      notifyListeners();
     }
-    notifyListeners();
   }
 }

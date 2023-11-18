@@ -35,6 +35,14 @@ class LoginScreen extends StatelessWidget {
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              cHeight30,
+              Center(
+                child: Image.asset(
+                  "assets/Login-removebg-preview.png",
+                  height: 250,
+                ),
+              ),
+              cHeight80,
               RoundedLoadingButton(
                 onPressed: () {
                   handleGoogleSignIn(context);
