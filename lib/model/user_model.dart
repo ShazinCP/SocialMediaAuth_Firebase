@@ -1,31 +1,32 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+class UserModel {
+  String uid;
+  String name;
+  String email;
+  String imageUrl;
+  String provider;
 
-// class UserModel {
-//   String? uid;
-//   String? name;
-//   String? email;
-//   String? imageUrl;
-//   String? provider;
+  UserModel({
+    required this.uid,
+    required this.name,
+    required this.email,
+    required this.imageUrl,
+    required this.provider,
+  });
 
-//   UserModel(
-//       {this.uid,
-//        this.name,
-//        this.email,
-//        this.imageUrl,
-//        this.provider});
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        uid: json['uid'],
+        name: json['name'],
+        email: json['email'],
+        imageUrl: json['image_url'],
+        provider: json['provider'],
+      );
 
-//   UserModel.fromJson(DocumentSnapshot snapshot) {
-//     uid = snapshot['uid'];
-//     name = snapshot['name'];
-//     email = snapshot['email'];
-//     imageUrl = snapshot['image_url'];
-//     provider = snapshot['provider'];
-//   }
-// }
+  // Map<String, dynamic> toJson() => {
+  //       'uid': uid,
+  //       'name': name,
+  //       'email': email,
+  //       'image_url': imageUrl,
+  //       'provider': provider,
+  //     };
 
-// Future<UserModel> getUserDataFromFirestore(String uid) async {
-//   DocumentSnapshot snapshot =
-//       await FirebaseFirestore.instance.collection('users').doc(uid).get();
-
-//   return UserModel.fromJson(snapshot);
-// }
+}

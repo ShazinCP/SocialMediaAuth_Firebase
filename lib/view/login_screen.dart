@@ -2,6 +2,7 @@ import 'package:auth_app/constants/sizedbox.dart';
 import 'package:auth_app/controller/auth_provider.dart';
 import 'package:auth_app/controller/internet_provider.dart';
 import 'package:auth_app/helper/colors.dart';
+import 'package:auth_app/model/user_model.dart';
 import 'package:auth_app/view/home_screen.dart';
 import 'package:auth_app/widgets/next_screen.dart';
 import 'package:auth_app/widgets/snack_bar.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+UserModel? user;
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -137,6 +140,7 @@ class LoginScreen extends StatelessWidget {
   Future handleGoogleSignIn(BuildContext context) async {
     final data = context.read<AuthProviders>();
     final network = context.read<InternetProvider>();
+
     await network.checkInternetConnection();
 
     if (network.hasInternet == false) {
@@ -153,7 +157,7 @@ class LoginScreen extends StatelessWidget {
           data.checkUserExists().then((value) async {
             if (value == true) {
               // USER EXISTS
-              await data.getUserDataFromFirestore(data.uid).then((value) => data
+              await data.getUserFromFirestore(data.uid).then((value) => data
                   .saveDataToSharedPreferences()
                   .then((value) => data.setSignIn().then((value) {
                         data.googleController.success();

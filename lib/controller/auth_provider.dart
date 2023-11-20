@@ -1,3 +1,4 @@
+import 'package:auth_app/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProviders extends ChangeNotifier {
-
   // instance of firebaseauth, facebook and google=
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FacebookAuth facebookAuth = FacebookAuth.instance;
@@ -120,22 +120,21 @@ class AuthProviders extends ChangeNotifier {
 
     return await FirebaseAuth.instance.signInWithProvider(githubProvider);
   }
-  
 
   // ENTRY FOR CLOUDFIRESTORE
-  Future getUserDataFromFirestore(uid) async {
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot snapshot) => {
-              _uid = snapshot['uid'],
-              _name = snapshot['name'],
-              _email = snapshot['email'],
-              _imageUrl = snapshot['image_url'],
-              _provider = snapshot['provider'],
-            });
-  }
+  // Future getUserDataFromFirestore(uid) async {
+  //   await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(uid)
+  //       .get()
+  //       .then((DocumentSnapshot snapshot) => {
+  //             _uid = snapshot['uid'],
+  //             _name = snapshot['name'],
+  //             _email = snapshot['email'],
+  //             _imageUrl = snapshot['image_url'],
+  //             _provider = snapshot['provider'],
+  //           });
+  // }
 
   Future saveDataToFirestore() async {
     final DocumentReference r =
@@ -148,6 +147,19 @@ class AuthProviders extends ChangeNotifier {
       "provider": _provider,
     });
     notifyListeners();
+  }
+
+  // Future<void> saveUserToFirestore(UserModel user) async {
+  //   final DocumentReference ref =
+  //       FirebaseFirestore.instance.collection('users').doc(user.uid);
+  //   await ref.set(user.toJson());
+  // }
+
+  Future<UserModel> getUserFromFirestore(uid) async {
+    final DocumentSnapshot snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    return UserModel.fromJson(data);
   }
 
   Future saveDataToSharedPreferences() async {
